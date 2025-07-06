@@ -9,24 +9,25 @@ public class CharacterSwitcher : MonoBehaviour
 {
     public static CharacterSwitcher instance;
     public static bool esModoBulletHellGlobal = false;
+    
+    [Header("Sistema de Vidas")]
+    public int vidasIniciales = 3;
+    public static int vidasActuales;
+    public List<GameObject> iconosVidas;
+    public Transform puntoDeReaparicion;
+    public TextMeshProUGUI textoGameOver;
 
-    [Header("Cámaras Virtuales")]
+    [Header("Cámaras y Efectos")]
     public CinemachineCamera vcamPlataforma;
     public CinemachineCamera vcamBulletHell;
-
-    [Header("Efecto de Cámara Inicial")]
     public float zoomInicial = 15f;
     public float zoomFinalPlataforma = 7f;
     public float duracionZoomInicial = 2f;
 
-    [Header("Prefabs de Personajes")]
+    [Header("Personajes y Recarga")]
     public List<GameObject> prefabsPersonajes;
-
-    [Header("Configuración de Recarga")]
     public float tiempoDeRecarga = 20f;
     private float recargaActual = 0f;
-
-    [Header("UI (Opcional)")]
     public TextMeshProUGUI textoRecarga;
 
     private int indicePersonajeActivo = 0;
@@ -34,14 +35,12 @@ public class CharacterSwitcher : MonoBehaviour
     private ControladorJugador controladorActual;
     private ControlesJugador controles;
     private Vector2 vectorDeMovimientoInput;
+    private bool esJuegoTerminado = false;
 
     public static void ActivarModoBulletHellGlobal()
     {
         esModoBulletHellGlobal = true;
-        if (instance != null)
-        {
-            instance.CambiarACamaraBulletHell();
-        }
+        if (instance != null) { instance.CambiarACamaraBulletHell(); }
     }
 
     private void Awake()
@@ -62,9 +61,13 @@ public class CharacterSwitcher : MonoBehaviour
     void Start()
     {
         esModoBulletHellGlobal = false;
+        esJuegoTerminado = false;
+        if (textoGameOver != null) textoGameOver.gameObject.SetActive(false);
 
-        if (vcamPlataforma != null)
-        {
+        vidasActuales = vidasIniciales;
+        ActualizarUIVidas();
+
+        if (vcamPlataforma != null) {
             vcamPlataforma.gameObject.SetActive(true);
             vcamPlataforma.Priority = 10;
             vcamPlataforma.Lens.OrthographicSize = zoomInicial;
@@ -76,24 +79,57 @@ public class CharacterSwitcher : MonoBehaviour
 
         if (prefabsPersonajes.Count > 0)
         {
-            CrearPersonaje(indicePersonajeActivo, transform.position, Quaternion.identity);
+            if (puntoDeReaparicion == null) puntoDeReaparicion = transform; // Fallback
+            CrearPersonaje(indicePersonajeActivo, puntoDeReaparicion.position, Quaternion.identity);
             StartCoroutine(AnimarZoomInicial());
         }
     }
 
     void Update()
     {
+        if (esJuegoTerminado) return;
+
         if (controladorActual != null)
         {
             controladorActual.SetVectorDeMovimiento(vectorDeMovimientoInput);
         }
-
         if (recargaActual > 0)
         {
             recargaActual -= Time.deltaTime;
         }
-        
         ActualizarUI();
+    }
+    
+    public void PerderVida()
+    {
+        if (esJuegoTerminado) return;
+        vidasActuales--;
+        ActualizarUIVidas();
+        if (personajeActualInstanciado != null) Destroy(personajeActualInstanciado);
+
+        if (vidasActuales > 0)
+        {
+            CrearPersonaje(indicePersonajeActivo, puntoDeReaparicion.position, Quaternion.identity);
+        }
+        else
+        {
+            FinDelJuego();
+        }
+    }
+
+    private void FinDelJuego()
+    {
+        esJuegoTerminado = true;
+        if (textoGameOver != null) textoGameOver.gameObject.SetActive(true);
+        Debug.Log("GAME OVER");
+    }
+
+    private void ActualizarUIVidas()
+    {
+        for (int i = 0; i < iconosVidas.Count; i++)
+        {
+            iconosVidas[i].SetActive(i < vidasActuales);
+        }
     }
     
     private void IntentarSalto()
