@@ -239,5 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f418a545cf4743b40a0a8aa8441e8179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadMovimiento: 4
-  fuerzaSalto: 8
+  velocidadMovimientoPlataforma: 5
+  velocidadMovimientoBulletHell: 6.5
+  fuerzaSalto: 7

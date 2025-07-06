@@ -207,11 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f418a545cf4743b40a0a8aa8441e8179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadMovimiento: 4
+  velocidadMovimientoPlataforma: 5
+  velocidadMovimientoBulletHell: 6.5
   fuerzaSalto: 7
-  cadenciaDeSalto: 0.4
-  groundCheck: {fileID: 3644517007673625303}
-  groundCheckRadius: 0.2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
