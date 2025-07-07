@@ -2386,6 +2386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58713de926c8b2144b3984017d8f7623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  proyectilPrefab: {fileID: 4567403157181811074, guid: 4217ec0691446b7439d26ca000b3ee45, type: 3}
+  tasaDeDisparo: 0.07
   vidasIniciales: 3
   iconosVidas:
   - {fileID: 333649533}
