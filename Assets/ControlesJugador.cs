@@ -117,6 +117,15 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Disparar"",
+                    ""type"": ""Button"",
+                    ""id"": ""51667ad6-58bf-4ab0-b547-779ef87e2082"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +205,17 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
                     ""action"": ""CambiarPersonaje"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d98628e-e403-497c-9975-29183ce846ac"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Disparar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +227,7 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
         m_Plataformas_Mover = m_Plataformas.FindAction("Mover", throwIfNotFound: true);
         m_Plataformas_Saltar = m_Plataformas.FindAction("Saltar", throwIfNotFound: true);
         m_Plataformas_CambiarPersonaje = m_Plataformas.FindAction("CambiarPersonaje", throwIfNotFound: true);
+        m_Plataformas_Disparar = m_Plataformas.FindAction("Disparar", throwIfNotFound: true);
     }
 
     ~@ControlesJugador()
@@ -290,6 +311,7 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
     private readonly InputAction m_Plataformas_Mover;
     private readonly InputAction m_Plataformas_Saltar;
     private readonly InputAction m_Plataformas_CambiarPersonaje;
+    private readonly InputAction m_Plataformas_Disparar;
     /// <summary>
     /// Provides access to input actions defined in input action map "Plataformas".
     /// </summary>
@@ -313,6 +335,10 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Plataformas/CambiarPersonaje".
         /// </summary>
         public InputAction @CambiarPersonaje => m_Wrapper.m_Plataformas_CambiarPersonaje;
+        /// <summary>
+        /// Provides access to the underlying input action "Plataformas/Disparar".
+        /// </summary>
+        public InputAction @Disparar => m_Wrapper.m_Plataformas_Disparar;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -348,6 +374,9 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
             @CambiarPersonaje.started += instance.OnCambiarPersonaje;
             @CambiarPersonaje.performed += instance.OnCambiarPersonaje;
             @CambiarPersonaje.canceled += instance.OnCambiarPersonaje;
+            @Disparar.started += instance.OnDisparar;
+            @Disparar.performed += instance.OnDisparar;
+            @Disparar.canceled += instance.OnDisparar;
         }
 
         /// <summary>
@@ -368,6 +397,9 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
             @CambiarPersonaje.started -= instance.OnCambiarPersonaje;
             @CambiarPersonaje.performed -= instance.OnCambiarPersonaje;
             @CambiarPersonaje.canceled -= instance.OnCambiarPersonaje;
+            @Disparar.started -= instance.OnDisparar;
+            @Disparar.performed -= instance.OnDisparar;
+            @Disparar.canceled -= instance.OnDisparar;
         }
 
         /// <summary>
@@ -429,5 +461,12 @@ public partial class @ControlesJugador: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCambiarPersonaje(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Disparar" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDisparar(InputAction.CallbackContext context);
     }
 }

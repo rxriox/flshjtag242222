@@ -10,6 +10,12 @@ public class CharacterSwitcher : MonoBehaviour
     public static CharacterSwitcher instance;
     public static bool esModoBulletHellGlobal = false;
     
+    [Header("Sistema de Disparo")]
+    public GameObject proyectilPrefab;
+    public float tasaDeDisparo = 0.2f;
+    private float proximoDisparo = 0f;
+    private bool estaDisparando = false;
+    
     [Header("Sistema de Vidas")]
     public int vidasIniciales = 3;
     public static int vidasActuales;
@@ -53,6 +59,9 @@ public class CharacterSwitcher : MonoBehaviour
         controles.Plataformas.Saltar.performed += _ => IntentarSalto();
         controles.Plataformas.Mover.performed += ctx => vectorDeMovimientoInput = ctx.ReadValue<Vector2>();
         controles.Plataformas.Mover.canceled += ctx => vectorDeMovimientoInput = Vector2.zero;
+        
+        controles.Plataformas.Disparar.performed += _ => estaDisparando = true;
+        controles.Plataformas.Disparar.canceled += _ => estaDisparando = false;
     }
 
     private void OnEnable() { controles.Plataformas.Enable(); }
@@ -63,10 +72,8 @@ public class CharacterSwitcher : MonoBehaviour
         esModoBulletHellGlobal = false;
         esJuegoTerminado = false;
         if (textoGameOver != null) textoGameOver.gameObject.SetActive(false);
-
         vidasActuales = vidasIniciales;
         ActualizarUIVidas();
-
         if (vcamPlataforma != null) {
             vcamPlataforma.gameObject.SetActive(true);
             vcamPlataforma.Priority = 10;
@@ -76,10 +83,9 @@ public class CharacterSwitcher : MonoBehaviour
             vcamBulletHell.gameObject.SetActive(false);
             vcamBulletHell.Priority = 5;
         }
-
         if (prefabsPersonajes.Count > 0)
         {
-            if (puntoDeReaparicion == null) puntoDeReaparicion = transform; // Fallback
+            if (puntoDeReaparicion == null) puntoDeReaparicion = transform;
             CrearPersonaje(indicePersonajeActivo, puntoDeReaparicion.position, Quaternion.identity);
             StartCoroutine(AnimarZoomInicial());
         }
@@ -88,16 +94,40 @@ public class CharacterSwitcher : MonoBehaviour
     void Update()
     {
         if (esJuegoTerminado) return;
-
         if (controladorActual != null)
         {
             controladorActual.SetVectorDeMovimiento(vectorDeMovimientoInput);
         }
+        ManejarDisparo();
         if (recargaActual > 0)
         {
             recargaActual -= Time.deltaTime;
         }
         ActualizarUI();
+    }
+    
+    private void ManejarDisparo()
+    {
+        if (esModoBulletHellGlobal && estaDisparando && Time.time > proximoDisparo)
+        {
+            proximoDisparo = Time.time + tasaDeDisparo;
+            DispararProyectil();
+        }
+    }
+
+    private void DispararProyectil()
+    {
+        if (proyectilPrefab == null || controladorActual == null) return;
+        Transform puntoDeDisparo = controladorActual.transform.Find("PuntoDeDisparo");
+        if (puntoDeDisparo != null)
+        {
+            Instantiate(proyectilPrefab, puntoDeDisparo.position, puntoDeDisparo.rotation);
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró 'PuntoDeDisparo' en el personaje. Disparando desde el centro.");
+            Instantiate(proyectilPrefab, controladorActual.transform.position, controladorActual.transform.rotation);
+        }
     }
     
     public void PerderVida()
