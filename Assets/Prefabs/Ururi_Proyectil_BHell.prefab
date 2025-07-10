@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 320688884030016031}
   - component: {fileID: 3089675483032789810}
   m_Layer: 0
-  m_Name: ProyectilJugador2
+  m_Name: Ururi_Proyectil_BHell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.36430237, g: 0, b: 0.735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -165,5 +165,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a429a6a26c756b4097cc8e2f6c37ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 10
-  tiempoDeVida: 3
+  velocidad: 33
+  tiempoDeVida: 0.67

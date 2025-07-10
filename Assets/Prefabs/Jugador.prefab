@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2949756395498173952}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57,6 +57,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1627711729895048286}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8671685286044604029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2475735527665957546}
+  m_Layer: 0
+  m_Name: Punto de disparo (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2475735527665957546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8671685286044604029}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.501, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -97,6 +128,7 @@ Transform:
   m_Children:
   - {fileID: 3644517007673625303}
   - {fileID: 3152354075752365224}
+  - {fileID: 2475735527665957546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7065758650839900584
@@ -242,3 +274,8 @@ MonoBehaviour:
   velocidadMovimientoPlataforma: 5
   velocidadMovimientoBulletHell: 6.5
   fuerzaSalto: 7
+  proyectilPlataformaPrefab: {fileID: 4567403157181811074, guid: 4217ec0691446b7439d26ca000b3ee45, type: 3}
+  proyectilBulletHellPrefab: {fileID: 4567403157181811074, guid: 853ab9f324eebf84db6a70a1627f0855, type: 3}
+  puntoDisparoPlataforma: {fileID: 3152354075752365224}
+  puntoDisparoBulletHell: {fileID: 2475735527665957546}
+  recargaDisparoPlataforma: 2

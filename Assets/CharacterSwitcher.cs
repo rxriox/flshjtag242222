@@ -11,7 +11,6 @@ public class CharacterSwitcher : MonoBehaviour
     public static bool esModoBulletHellGlobal = false;
     
     [Header("Sistema de Disparo")]
-    public GameObject proyectilPrefab;
     public float tasaDeDisparo = 0.2f;
     private float proximoDisparo = 0f;
     private bool estaDisparando = false;
@@ -59,9 +58,29 @@ public class CharacterSwitcher : MonoBehaviour
         controles.Plataformas.Saltar.performed += _ => IntentarSalto();
         controles.Plataformas.Mover.performed += ctx => vectorDeMovimientoInput = ctx.ReadValue<Vector2>();
         controles.Plataformas.Mover.canceled += ctx => vectorDeMovimientoInput = Vector2.zero;
-        
-        controles.Plataformas.Disparar.performed += _ => estaDisparando = true;
-        controles.Plataformas.Disparar.canceled += _ => estaDisparando = false;
+        //aqui
+        controles.Plataformas.Disparar.performed += OnDispararPresionado;
+controles.Plataformas.Disparar.canceled += OnDispararSuelto;
+    }
+
+    private void OnDispararPresionado(InputAction.CallbackContext context)
+{
+    // Si estamos en modo bullet hell, activamos el disparo continuo.
+    if (esModoBulletHellGlobal)
+    {
+        estaDisparando = true;
+    }
+    // Si estamos en modo plataforma, llamamos al método de disparo único.
+    else
+    {
+        controladorActual?.RealizarDisparoPlataforma();
+    }
+}
+
+    private void OnDispararSuelto(InputAction.CallbackContext context)
+    {
+        // Al soltar la tecla, siempre desactivamos el disparo continuo.
+        estaDisparando = false;
     }
 
     private void OnEnable() { controles.Plataformas.Enable(); }
@@ -116,19 +135,23 @@ public class CharacterSwitcher : MonoBehaviour
     }
 
     private void DispararProyectil()
+{
+    if (controladorActual == null) return;
+
+    GameObject prefabADisparar = controladorActual.proyectilBulletHellPrefab;
+    // Obtenemos la referencia al punto de disparo del modo bullet hell.
+    Transform puntoDeDisparo = controladorActual.puntoDisparoBulletHell;
+
+    if (prefabADisparar == null || puntoDeDisparo == null)
     {
-        if (proyectilPrefab == null || controladorActual == null) return;
-        Transform puntoDeDisparo = controladorActual.transform.Find("PuntoDeDisparo");
-        if (puntoDeDisparo != null)
-        {
-            Instantiate(proyectilPrefab, puntoDeDisparo.position, puntoDeDisparo.rotation);
-        }
-        else
-        {
-            Debug.LogWarning("No se encontró 'PuntoDeDisparo' en el personaje. Disparando desde el centro.");
-            Instantiate(proyectilPrefab, controladorActual.transform.position, controladorActual.transform.rotation);
-        }
+        Debug.LogWarning("El personaje no tiene configurado el 'Proyectil Bullet Hell Prefab' o el 'Punto Disparo Bullet Hell'.");
+        return;
     }
+
+    // Creamos el proyectil en la posición y rotación del punto de disparo superior.
+    // No necesita rotación especial porque el proyectil ya se mueve hacia arriba.
+    Instantiate(prefabADisparar, puntoDeDisparo.position, puntoDeDisparo.rotation);
+}
     
     public void PerderVida()
     {
