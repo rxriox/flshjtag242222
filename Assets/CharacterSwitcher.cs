@@ -58,9 +58,9 @@ public class CharacterSwitcher : MonoBehaviour
         controles.Plataformas.Saltar.performed += _ => IntentarSalto();
         controles.Plataformas.Mover.performed += ctx => vectorDeMovimientoInput = ctx.ReadValue<Vector2>();
         controles.Plataformas.Mover.canceled += ctx => vectorDeMovimientoInput = Vector2.zero;
-        //aqui
+
         controles.Plataformas.Disparar.performed += OnDispararPresionado;
-controles.Plataformas.Disparar.canceled += OnDispararSuelto;
+        controles.Plataformas.Disparar.canceled += OnDispararSuelto;
     }
 
     private void OnDispararPresionado(InputAction.CallbackContext context)

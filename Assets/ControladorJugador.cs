@@ -13,13 +13,13 @@ public class ControladorJugador : MonoBehaviour
 
     [Header("Puntos de Disparo")]
     public Transform puntoDisparoPlataforma; // Disparo lateral
-    public Transform puntoDisparoBulletHell; // <-- NUEVO: disparo en modo Bullet Hell
+    public Transform puntoDisparoBulletHell; // disparo en modo Bullet Hell
 
     [Header("Disparo en Plataforma")]
     public float recargaDisparoPlataforma = 2f;
     private float temporizadorDisparoPlataforma = 0f;
 
-    // --- Variables Internas ---
+    // Variables Internas
     private bool estaEnSuelo = false;
     private Rigidbody2D rb;
     private Vector2 vectorDeMovimientoActual;
