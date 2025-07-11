@@ -278,4 +278,4 @@ MonoBehaviour:
   proyectilBulletHellPrefab: {fileID: 4567403157181811074, guid: 853ab9f324eebf84db6a70a1627f0855, type: 3}
   puntoDisparoPlataforma: {fileID: 3152354075752365224}
   puntoDisparoBulletHell: {fileID: 2475735527665957546}
-  recargaDisparoPlataforma: 2
+  recargaDisparoPlataforma: 0.25
